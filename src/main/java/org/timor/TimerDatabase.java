@@ -29,6 +29,10 @@ public class TimerDatabase {
         this.database.put(new Egg("hard", "large"), 600);        // 10:00
         this.database.put(new Egg("hard", "extra large"), 660);  // 11:00
         this.database.put(new Egg("hard", "jumbo"), 720);        // 12:00
+
+        // tests
+        this.database.put(new Egg("test", "test"), 5);
+        this.database.put(new Egg("something", "big"), 3);
     }
 
     public int getTime(String style, String size) {

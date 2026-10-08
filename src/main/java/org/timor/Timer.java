@@ -30,7 +30,7 @@ public class Timer {
             this.calculateTime();
             System.out.print("\r" + this);
         }
-        System.out.println("Time's Up!");
+        System.out.println("\nTime's Up!");
     }
 
     @Override

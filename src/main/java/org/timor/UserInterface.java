@@ -10,21 +10,23 @@ public class UserInterface {
     private boolean running;
     private HashMap<String, Runnable> options;
     private TimerDatabase database;
+    private EggHistory history;
 
     public UserInterface(Scanner scanner) {
         this.scanner = scanner;
         this.options = new HashMap<>();
         this.database = new TimerDatabase();
+        this.history = new EggHistory();
         this.populateFoodOptions();
 
         this.running = true;
     }
 
     public void start() {
-        fancyPrint("the worst egg timer oat lowk...");
+        fancyPrint("something semifunctional i made using hashmaps...");
 
         while (this.running) {
-            System.out.println("\rwhat food is you cookin you fatass: (type \"quit\" to quit)");
+            System.out.println("\nwhat food is you cookin: (type \"quit\" to quit; \"?\" for help)");
             String userInput = scanner.nextLine().toLowerCase().trim();
 
             if (options.containsKey(userInput)) {
@@ -40,6 +42,14 @@ public class UserInterface {
         this.options.put("egg", () -> this.eggOptions());
         this.options.put("eggs", () -> this.eggOptions());
         this.options.put("meatballs", () -> System.out.println("nah i aint coding ts son"));
+
+        this.options.put("?", () -> this.printMenuOptions());
+
+        this.options.put("history", () -> {
+            System.out.println("History: ");
+            this.history.print();
+        });
+
         this.options.put("quit", () -> {
             System.out.println("yamete kudasai!!");
             this.running = false;
@@ -57,6 +67,7 @@ public class UserInterface {
                 System.out.println("\npress enter to start");
                 scanner.nextLine();
                 this.initialiseTimer(this.database.getTime(style, size));
+                this.history.add(style, new Egg(style, size));
                 break;
 
             } catch (Exception e) {
@@ -71,6 +82,13 @@ public class UserInterface {
         this.timer = new Timer(seconds);
         this.timer.decrement();
         System.out.println();
+    }
+
+    public void printMenuOptions() {
+        System.out.println("available actions: ");
+        for (String s : this.options.keySet()) {
+            System.out.println("  - " + s);
+        }
     }
 
     public void fancyPrint(String text) {
